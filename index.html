@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心拍ゾーン計算ツール【無料】簡単・無料計算</title>
+    <title>心拍ゾーン計算ツール【無料】有酸素・脂肪燃焼ゾーン計算</title>
     <meta name="description" content="年齢・最大心拍数から有酸素運動・脂肪燃焼の最適心拍ゾーンを計算。登録不要・完全無料でご利用いただけます。">
     <link rel="canonical" href="https://appadaycreator.github.io/heart-rate-zone-calculator/">
-    <meta property="og:title" content="心拍ゾーン計算ツール【無料】簡単・無料計算">
+    <meta property="og:title" content="心拍ゾーン計算ツール【無料】有酸素・脂肪燃焼ゾーン計算">
     <meta property="og:description" content="年齢・最大心拍数から有酸素運動・脂肪燃焼の最適心拍ゾーンを計算。登録不要・完全無料でご利用いただけます。">
     <meta property="og:url" content="https://appadaycreator.github.io/heart-rate-zone-calculator/">
     <meta property="og:type" content="website">
@@ -48,7 +48,7 @@
         .result-value { font-size: 36px; font-weight: 700; color: #6366F1; text-align: center; padding: 16px 0; }
         .badge { display: inline-block; background: #6366F120; color: #6366F1; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         /* ── サービス固有CSS ── */
-
+        .zone-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:10px;border-radius:8px;font-size:13px;}.zone-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
     </style>
 </head>
 <body>
@@ -64,18 +64,18 @@
         <ins class="adsbygoogle" style="display:block;margin:12px 0" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
-        <!-- ✅MAIN_HTML自動生成済み：JS_CODEの★部分のみ実装してください -->
         <div class="card">
           <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;">❤️ 心拍ゾーン計算ツール</h2>
-          <label>心拍ゾーン計算ツールの入力値</label>
-          <input type="number" id="val1" placeholder="100" min="0">
-          <label style="margin-top:12px;">係数・補正値</label>
-          <input type="number" id="val2" placeholder="1.0" min="0">
-          <button class="btn" style="margin-top:20px;" onclick="calculate()">心拍ゾーン計算ツールを計算する</button>
+          <label style="font-weight:600;">年齢（歳）</label>
+          <input type="number" id="age" placeholder="30" min="10" max="90" style="margin-top:6px;">
+          <label style="font-weight:600;margin-top:12px;display:block;">安静時心拍数（bpm）</label>
+          <input type="number" id="rest" placeholder="65" min="30" max="120" style="margin-top:6px;">
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">※朝起きた直後、動く前に測定</p>
+          <button class="btn" style="margin-top:20px;" onclick="calculate()">心拍ゾーンを計算する</button>
           <div class="result" id="result" style="margin-top:16px;">
-            <div class="card" style="text-align:center;">
-              <div id="output" style="font-size:2.2rem;font-weight:700;color:#6366F1;padding:12px 0;"></div>
-              <p id="detail" style="color:#666;font-size:14px;margin-top:4px;"></p>
+            <div class="card">
+              <div id="output" style="font-size:1.3rem;font-weight:700;color:#6366F1;text-align:center;padding:8px 0 12px;"></div>
+              <div id="detail"></div>
             </div>
           </div>
         </div>
@@ -84,9 +84,9 @@
         <div class="card" style="margin-top:8px;">
             <h3 style="font-size:13px;font-weight:600;color:#888;margin-bottom:10px;">🔗 関連サービス</h3>
             <div style="display:flex;flex-direction:column;gap:6px;">
-                <a href="https://appadaycreator.github.io/calorie-burn-calculator/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">Calorie Burn Calculator →</a>
-                <a href="https://appadaycreator.github.io/bmi-body-tracker/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">Bmi Body Tracker →</a>
-                <a href="https://appadaycreator.github.io/running-pace-calculator/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">🏃 ランニングペース計算ツール →</a>
+                <a href="https://appadaycreator.com/calorie-burn-calculator/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">カロリー消費計算ツール →</a>
+                <a href="https://appadaycreator.com/bmi-body-tracker/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">BMI体重管理ツール →</a>
+                <a href="https://appadaycreator.com/running-pace-calculator/" style="color:#6366f1;font-size:13px;text-decoration:none;padding:6px 0;border-bottom:1px solid #f1f5f9;">ランニングペース計算ツール →</a>
             </div>
         </div>
 
@@ -119,29 +119,32 @@
     </footer>
 
     <script>
-    // ★ここだけ実装（約10行）★
-    const CFG = {{
-      inputs: ['val1','val2'],  // ✅自動設定済み→変更不要
-      error: '値を入力してください', // 変更: バリデーションエラー文
-    }};
-    function calcLogic(vals) {{
-      const [v1] = vals;  // 変更: vals[0],vals[1]... で各入力値を取得
-      const result = v1;  // 変更: 実際の計算式
-      const detail = '';  // 変更: 補足説明（単位など）
-      return {{ result, detail }};
-    }}
-    // ★以下変更不要★
-    document.addEventListener('DOMContentLoaded',()=>{{
-      CFG.inputs.forEach(id=>{{ const el=document.getElementById(id); if(el) el.addEventListener('keydown',e=>{{ if(e.key==='Enter') calculate(); }}); }});
-    }});
-    function calculate(){{
-      const vals=CFG.inputs.map(id=>parseFloat(document.getElementById(id)?.value)||0);
-      if(!vals[0]){{ alert(CFG.error); return; }}
-      const {{result,detail}}=calcLogic(vals);
-      document.getElementById('output').textContent=typeof result==='number'?result.toLocaleString():result;
-      const d=document.getElementById('detail'); if(d) d.textContent=detail||'';
+    const CFG={inputs:['age','rest'],error:'年齢を入力してください'};
+    const ZONES=[
+      {name:'ゾーン1 ウォームアップ',pct:[50,60],color:'#93c5fd',tip:'軽い運動・回復走'},
+      {name:'ゾーン2 脂肪燃焼',pct:[60,70],color:'#6ee7b7',tip:'有酸素・脂肪燃焼に最適'},
+      {name:'ゾーン3 有酸素強化',pct:[70,80],color:'#fde68a',tip:'持久力アップ'},
+      {name:'ゾーン4 無酸素閾値',pct:[80,90],color:'#fca5a5',tip:'スピード・心肺強化'},
+      {name:'ゾーン5 最大強度',pct:[90,100],color:'#f87171',tip:'短時間・高強度トレーニング'}
+    ];
+    document.addEventListener('DOMContentLoaded',()=>{
+      CFG.inputs.forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter')calculate();});});
+    });
+    function calculate(){
+      const age=parseFloat(document.getElementById('age')?.value)||0;
+      const rest=parseFloat(document.getElementById('rest')?.value)||60;
+      if(!age){alert(CFG.error);return;}
+      const hrMax=220-age;
+      const hrr=hrMax-rest;
+      document.getElementById('output').textContent='最大心拍数：'+hrMax+' bpm';
+      const rows=ZONES.map(z=>{
+        const lo=Math.round(rest+hrr*z.pct[0]/100);
+        const hi=Math.round(rest+hrr*z.pct[1]/100);
+        return `<div class="zone-row" style="background:${z.color}22;"><div class="zone-dot" style="background:${z.color};"></div><div style="flex:1;"><strong>${z.name}</strong><br><span style="color:#666;">${lo}〜${hi} bpm｜${z.tip}</span></div></div>`;
+      }).join('');
+      document.getElementById('detail').innerHTML=rows;
       document.getElementById('result').classList.add('show');
-    }}
+    }
     </script>
 </body>
 </html>
