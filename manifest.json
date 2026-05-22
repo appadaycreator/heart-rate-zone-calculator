@@ -1,0 +1,8 @@
+{
+  "name": "Heart Rate Zone Calculator",
+  "short_name": "heart-rate-z",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1"
+}
