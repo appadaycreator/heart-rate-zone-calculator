@@ -61,6 +61,9 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
         .result-value { font-size: 36px; font-weight: 700; color: #7c3aed; text-align: center; padding: 16px 0; }
         .badge { display: inline-block; background: #7c3aed20; color: #7c3aed; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .err-msg { font-size: 12px; color: #ef4444; margin-top: 3px; display: none; }
+        .err-msg.show { display: block; }
+        input.err { border-color: #ef4444 !important; }
         @media (max-width: 480px) {
             .site-header { padding: 24px 16px; }
             .site-header h1 { font-size: 20px; }
@@ -101,6 +104,7 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
           <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;">❤️ 心拍ゾーン計算ツール</h2>
           <label style="font-weight:600;">年齢（歳）</label>
           <input type="number" id="age" placeholder="30" min="10" max="90" style="margin-top:6px;">
+          <div class="err-msg" id="age-err">年齢を正しく入力してください（10〜90歳）</div>
           <label style="font-weight:600;margin-top:12px;display:block;">安静時心拍数（bpm）</label>
           <input type="number" id="rest" placeholder="65" min="30" max="120" style="margin-top:6px;">
           <p style="font-size:12px;color:#94a3b8;margin-top:4px;">※朝起きた直後、動く前に測定</p>
@@ -198,13 +202,23 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
       {name:'ゾーン4 無酸素閾値',pct:[80,90],color:'#fca5a5',tip:'スピード・心肺強化'},
       {name:'ゾーン5 最大強度',pct:[90,100],color:'#f87171',tip:'短時間・高強度トレーニング'}
     ];
+    function saveInputs() {
+      try { localStorage.setItem('heartRateCalc_v1', JSON.stringify({age: document.getElementById('age').value, rest: document.getElementById('rest').value})); } catch(e) {}
+    }
+    function restoreInputs() {
+      try { const d = JSON.parse(localStorage.getItem('heartRateCalc_v1') || 'null'); if (!d) return; if (d.age) document.getElementById('age').value = d.age; if (d.rest) document.getElementById('rest').value = d.rest; } catch(e) {}
+    }
     document.addEventListener('DOMContentLoaded',()=>{
+      restoreInputs();
       CFG.inputs.forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter')calculate();});});
     });
     function calculate(){
       const age=parseFloat(document.getElementById('age')?.value)||0;
       const rest=parseFloat(document.getElementById('rest')?.value)||60;
-      if(!age){alert(CFG.error);return;}
+      const aEl=document.getElementById('age'); const aErr=document.getElementById('age-err');
+      if(!age||age<10||age>90){aEl.classList.add('err');aErr.classList.add('show');aEl.focus();return;}
+      aEl.classList.remove('err');aErr.classList.remove('show');
+      saveInputs();
       const hrMax=220-age;
       const hrr=hrMax-rest;
       document.getElementById('output').textContent='最大心拍数：'+hrMax+' bpm';
